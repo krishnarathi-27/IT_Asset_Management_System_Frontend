@@ -1,0 +1,46 @@
+<div class="container">
+    <div class="col">
+        <form #authForm="ngForm" (ngSubmit)="onLoginSubmit()">
+            <div>
+                <input 
+                    name="username"
+                    ngModel
+                    pInputText 
+                    placeholder="Username"
+                    pattern="[a-zA-Z0-9].{3,}"
+                    required>
+                    <small 
+                        *ngIf="authForm.controls['username']?.dirty && authForm.controls['username']?.invalid"
+                        class="p-error">
+                        *Username is required
+                    </small>
+            </div>
+            <div>
+                <input 
+                    name="password"
+                    ngModel
+                    pInputText 
+                    placeholder="Password" 
+                    type="password"
+                    required>
+                    <small 
+                        *ngIf="authForm.controls['password']?.dirty && authForm.controls['password']?.invalid"
+                        class="p-error">
+                        *Password is required
+                    </small>
+                </div>
+            <div>
+                <p-button 
+                    label="Submit" 
+                    type="submit"
+                    [disabled]="authForm.invalid"
+                    pRipple
+                    label="Success" 
+                ></p-button>
+            </div>
+        </form>
+    </div>
+    <div class="col">
+        <img src="././assets/login-background.png" alt="" >
+    </div>
+</div>

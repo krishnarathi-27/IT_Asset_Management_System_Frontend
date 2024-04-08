@@ -1,0 +1,24 @@
+<div>    
+    <router-outlet></router-outlet>
+    <h1>Welcome Back !!</h1>
+    <div class="card-display">
+    <div *ngFor="let card of cards"
+        class="card-display-item">
+        <p-card
+        header="{{ card.header }}"
+        subheader="{{ card.subheader }}"
+        >
+        <ng-template pTemplate="header">
+            <img
+            alt="Card image"
+            src="{{ card.image }}"
+            />
+        </ng-template>
+        <ng-template pTemplate="footer">
+            <p-button label="Visit" 
+            (click)="onVisitClick(card.id)"></p-button>
+        </ng-template>
+        </p-card>
+    </div>
+    </div>
+</div>

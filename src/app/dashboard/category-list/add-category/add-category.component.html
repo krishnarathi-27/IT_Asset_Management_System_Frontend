@@ -1,0 +1,58 @@
+<p-dialog header="Add new vendor" (onHide)="close()" [(visible)]="visible" [modal]="true" [style]="{ width: '30vw' }" [draggable]="false" [resizable]="false">
+    <div class="m-0">
+        <form #categoryForm="ngForm" (ngSubmit)="onAddCategory()">
+            <div>
+                <input 
+                    name="category_name"
+                    ngModel
+                    pInputText 
+                    placeholder="Category name"
+                    pattern="[a-zA-Z0-9].{3,}"
+                    required
+                    >
+                    <small 
+                        *ngIf="categoryForm.controls['vendorname']?.touched && categoryForm.controls['vendorname']?.invalid"
+                        class="p-error">
+                        *Category name is required
+                    </small>
+            </div>
+            <div>
+                <input 
+                    name="brand_name"
+                    ngModel
+                    pInputText 
+                    placeholder="Brand name"
+                    pattern="[a-zA-Z0-9].{3,}"
+                    required
+                    >
+                    <small 
+                        *ngIf="categoryForm.controls['brand_name']?.touched && categoryForm.controls['brand_name']?.invalid"
+                        class="p-error">
+                        *Brand name is required
+                    </small>
+            </div>
+            <div>
+                <input 
+                    name="vendor_email"
+                    ngModel
+                    pInputText 
+                    placeholder="Vendor email"
+                    type="email"
+                    email
+                    required
+                    >
+                    <small 
+                        *ngIf="categoryForm.controls['vendor_email']?.touched && categoryForm.controls['vendor_email']?.invalid"
+                        class="p-error">
+                        *Vendor email is required
+                    </small>
+            </div>
+            <div>
+                <p-button 
+                    label="Submit" 
+                    type="submit"
+                    [disabled]="categoryForm.invalid"></p-button>
+            </div>
+        </form>
+    </div>
+</p-dialog>

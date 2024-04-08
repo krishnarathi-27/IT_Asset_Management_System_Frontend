@@ -1,0 +1,41 @@
+<p-dialog header="Add new user" (onHide)="close()" [(visible)]="visible" [modal]="true" [style]="{ width: '30vw' }" [draggable]="false" [resizable]="false">
+    <div class="m-0">
+        <form #userForm="ngForm" (ngSubmit)="onAddUser()">
+            <div>
+                <input 
+                    name="username"
+                    ngModel
+                    pInputText 
+                    placeholder="Username"
+                    pattern="[a-zA-Z0-9].{3,}"
+                    required
+                    >
+                    <small 
+                        *ngIf="userForm.controls['username']?.touched && userForm.controls['username']?.invalid"
+                        class="p-error">
+                        *Username is required
+                    </small>
+            </div>
+            <div>
+                <p-dropdown 
+                    [options]="roles" 
+                    [(ngModel)]="selectedRole" 
+                    [showClear]="true" 
+                    placeholder="Select a role" 
+                    name="dropdownMenu"
+                    required></p-dropdown>
+                <small 
+                    *ngIf="userForm.controls['dropdownMenu']?.touched && userForm.controls['dropdownMenu']?.invalid"
+                    class="p-error">
+                    *Role is required
+                </small>
+            </div>
+            <div>
+                <p-button 
+                    label="Submit" 
+                    type="submit"
+                    [disabled]="userForm.invalid"></p-button>
+            </div>
+        </form>
+    </div>
+</p-dialog>

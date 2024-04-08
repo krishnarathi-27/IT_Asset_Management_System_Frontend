@@ -1,0 +1,43 @@
+<p-dialog header="Add new vendor" (onHide)="close()" [(visible)]="visible" [modal]="true" [style]="{ width: '30vw' }" [draggable]="false" [resizable]="false">
+    <div class="m-0">
+        <form #vendorForm="ngForm" (ngSubmit)="onAddVendor()">
+            <div>
+                <input 
+                    name="vendorname"
+                    ngModel
+                    pInputText 
+                    placeholder="Vendor name"
+                    pattern="[a-zA-Z0-9].{3,}"
+                    required
+                    >
+                    <small 
+                        *ngIf="vendorForm.controls['vendorname']?.touched && vendorForm.controls['vendorname']?.invalid"
+                        class="p-error">
+                        *Vendor name is required
+                    </small>
+            </div>
+            <div>
+                <input 
+                    name="vendoremail"
+                    ngModel
+                    pInputText 
+                    placeholder="Vendor email"
+                    type="email"
+                    email
+                    required
+                    >
+                    <small 
+                        *ngIf="vendorForm.controls['vendoremail']?.touched && vendorForm.controls['vendoremail']?.invalid"
+                        class="p-error">
+                        *Vendor email is required
+                    </small>
+            </div>
+            <div>
+                <p-button 
+                    label="Submit" 
+                    type="submit"
+                    [disabled]="vendorForm.invalid"></p-button>
+            </div>
+        </form>
+    </div>
+</p-dialog>

@@ -1,0 +1,41 @@
+/* *{
+    background-color: antiquewhite;
+} */
+
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.col{
+    /* align-items: center; */
+    margin: auto;
+}
+
+img{
+    margin-top: 50px;
+    padding: auto;
+    width: 35em;
+}
+
+.col form{
+    padding: 40px;
+    border-right: 5px solid #0077b6;
+    box-shadow: 2px 2px 2px 2px rgb(0 0 0 / 20%);
+}
+
+.p-element{
+    margin-bottom: 20px;
+} 
+
+small{
+    display: block;
+    margin-bottom: 20px;
+}
+
+@media(max-width: 800px){
+    .container{
+        flex-direction: column-reverse;
+    }
+}

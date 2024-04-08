@@ -1,0 +1,13 @@
+form{
+    padding: 40px;
+    box-shadow: 2px 2px 2px 2px rgb(0 0 0 / 20%);
+}
+
+.p-element{
+    margin-bottom: 20px;
+} 
+
+small{
+    display: block;
+    margin-bottom: 20px;
+}

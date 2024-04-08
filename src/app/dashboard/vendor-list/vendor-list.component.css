@@ -1,0 +1,35 @@
+h1{
+    text-align: center;
+    margin-top: 40px;
+}
+
+.add-button{
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+:host ::ng-deep .p-datatable{
+    margin: 0 100px;
+    box-shadow: 2px 2px 2px 2px rgb(0 0 0 / 10%);
+}
+
+.active{
+    background-color: green;
+    padding: 10px;
+    color: white;
+    border-radius: 4px;
+}
+
+.inactive{
+    background-color: red;
+    padding: 10px;
+    color: white;
+    border-radius: 4px;
+}
+
+.delete-button{
+    background-color: rgb(255, 128, 1);
+    padding: 10px;
+    color: white;
+    border-radius: 4px;
+}
