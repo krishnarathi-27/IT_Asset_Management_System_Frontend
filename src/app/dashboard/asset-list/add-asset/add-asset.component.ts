@@ -1,15 +1,15 @@
 import { Component, EventEmitter, Input, Output, ViewChild, inject } from '@angular/core';
-import { AssetService } from '../asset.service';
-import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 import { MyMessageService } from '../../../shared/my-message.service';
+import { AssetService } from '../asset.service';
 
 @Component({
-  selector: 'app-update-asset',
-  templateUrl: './update-asset.component.html',
-  styleUrl: './update-asset.component.css'
+  selector: 'app-add-asset',
+  templateUrl: './add-asset.component.html',
+  styleUrl: './add-asset.component.css'
 })
-export class UpdateAssetComponent {
+export class AddAssetComponent {
   assetType: string[];
   selectedAssetType: string = 'assignable';
 
@@ -41,7 +41,7 @@ export class UpdateAssetComponent {
     this.onSuccessApplied.emit();
 }
 
-  onUpdateUser(){
+  onAddUser(){
 
     if(!this.assetForm.valid){
       return;

@@ -33,10 +33,15 @@ h1{
 	text-align: center; 
 } 
 
+
 :host ::ng-deep .p-card-body .p-card-footer{
     padding: 0px;
 }
 
+:host ::ng-deep .ng-star-inserted{
+    display: flex;
+   justify-content: center;
+}
 :host ::ng-deep .p-card-content{
     display: none;
 }

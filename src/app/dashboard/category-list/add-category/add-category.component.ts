@@ -1,35 +1,39 @@
-import { Component, ViewChild, inject } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild, inject } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CategoryService } from '../category.service';
 import { MyMessageService } from '../../../shared/my-message.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-add-category',
   templateUrl: './add-category.component.html',
   styleUrl: './add-category.component.css'
 })
-export class AddCategoryComponent {
-  visible = true;
+export class AddCategoryComponent implements OnInit, OnDestroy{
+
   roles: string[];
   selectedRole: string;
-
-  @ViewChild('categoryForm') categoryForm : NgForm
 
   router = inject(Router);
   categoryService = inject(CategoryService);
   myMessageService = inject(MyMessageService);
-
-  ngOnInit() {
+  categorySubscription : Subscription;
+  
+  @Input('visible') visible: boolean;
+  @Output() onSuccessApplied = new EventEmitter<void>();
+  @ViewChild('categoryForm') categoryForm : NgForm
+  
+  ngOnInit(): void{
         this.roles = ['Employee','Asset Manager'];
-    }
-
-  close(){
-    this.visible = false;
-    this.router.navigate(['categories'])
   }
 
-  onAddCategory(){
+  close(): void{
+    this.visible = false;
+    this.onSuccessApplied.emit();
+  }
+
+  onAddCategory(): void{
 
     if(!this.categoryForm.valid){
       return;
@@ -39,7 +43,9 @@ export class AddCategoryComponent {
     const brandName = this.categoryForm.value.brand_name;
     const vendorEmail = this.categoryForm.value.vendor_email;
 
-    this.categoryService.createCategory(categoryName,brandName,vendorEmail).subscribe({
+    this.categorySubscription = this.categoryService.
+                                    createCategory(categoryName,brandName,vendorEmail).
+                                    subscribe({
       next: (result: any) =>{
         this.close();
         this.myMessageService.showMessage('success','Success',result.message);
@@ -50,5 +56,12 @@ export class AddCategoryComponent {
     });
 
     this.categoryForm.reset();
+  }
+
+  ngOnDestroy(): void {
+
+    if(this.categorySubscription){
+      this.categorySubscription.unsubscribe();
+    }
   }
 }

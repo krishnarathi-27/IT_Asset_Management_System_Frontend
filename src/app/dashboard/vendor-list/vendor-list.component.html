@@ -1,17 +1,23 @@
-<h1>Vendors</h1>
-<div class="add-button">
-    <p-button label="+ Add Vendor" [rounded]="true" severity="danger" (click)="addVendor()"></p-button>
-</div>
-<router-outlet></router-outlet>
-<p-table
+<app-loader *ngIf="isLoading"></app-loader>
+
+<div *ngIf="!isLoading">
+    <h1>Vendors</h1>
+
+    <div class="add-button">
+        <p-button label="+ Add Vendor" [rounded]="true" severity="danger" (click)="addVendor()"></p-button>
+    </div>
+
+    <app-add-vendor (onSuccessApplied)="closeDialog($event)" [visible]="visible"></app-add-vendor>
+
+    <p-table
     [value]="vendors"
     [paginator]="true"
-    [rows]="5"
-    [showCurrentPageReport]="true"
-    [tableStyle]="{ 'min-width': '50rem' }"
-    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-    [rowsPerPageOptions]="[5, 10, 20]"
->
+        [rows]="5"
+        [showCurrentPageReport]="true"
+        [tableStyle]="{ 'min-width': '50rem' }"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [rowsPerPageOptions]="[5, 10, 20]"
+    >
     <ng-template pTemplate="header">
         <tr>
             <th style="width:16.67%">SNo.</th>
@@ -24,20 +30,23 @@
     </ng-template>
     <ng-template pTemplate="body" let-vendor let-rowIndex="rowIndex">
         <tr>
-          <td>{{ rowIndex + 1 }}</td>
-          <td>{{ vendor.vendor_id }}</td>
-          <td>{{ vendor.vendor_email }}</td>
-          <td>{{ vendor.vendor_name }}</td>
-          <td><p-tag [ngClass] = "vendor.active_status === 'true'? 'active' : 'inactive'">{{vendor.active_status }}</p-tag></td>
-          <td
+            <td>{{ rowIndex + 1 }}</td>
+            <td>{{ vendor.vendor_id }}</td>
+            <td>{{ vendor.vendor_email }}</td>
+            <td>{{ vendor.vendor_name }}</td>
+            <td><p-tag [ngClass] = "vendor.active_status === 'true'? 'active' : 'inactive'">{{vendor.active_status }}</p-tag></td>
+            <td
             *ngIf="canAccess"
-          ><p-tag 
-                *ngIf = "vendor.active_status === 'true'"
-                ngClass = "delete-button"
-                (click)="onDeleteVendor(rowIndex)">
+            >
+            <p-tag 
+                    *ngIf = "vendor.active_status === 'true'"
+                    ngClass = "delete-button"
+                    (click)="onDeleteVendor($event,rowIndex)">
                     Delete
                 </p-tag>
-            </td>
-        </tr>
-      </ng-template>
-</p-table>
+
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

@@ -9,11 +9,10 @@ import { FormsModule } from "@angular/forms";
 import { CommonModule } from "@angular/common";
 import { InputTextModule } from "primeng/inputtext";
 import { DropdownModule } from 'primeng/dropdown';
+import { SharedModule } from "../../shared/shared.module";
 
 const routes: Routes = [
-    {path:'',component: UserListComponent ,children: [
-        {path: 'add-user', component: AddUserComponent}
-      ]},
+    {path:'',component: UserListComponent},
 ]
 
 @NgModule({
@@ -22,13 +21,7 @@ const routes: Routes = [
         AddUserComponent,
     ],
     imports:[
-        CommonModule,
-        TableModule,
-        FormsModule,
-        ButtonModule,
-        DialogModule,        
-        InputTextModule,
-        DropdownModule,
+        SharedModule,
         RouterModule.forChild(routes)
     ],
     exports:[

@@ -1,0 +1,72 @@
+<p-dialog header="Add new asset" (onHide)="close()" [(visible)]="visible" [modal]="true" [style]="{ width: '30vw' }" [draggable]="false" [resizable]="false">
+    <div class="m-0">
+        <form #assetForm="ngForm" (ngSubmit)="onAddUser()">
+            <div>
+                <input 
+                    name="category_name"
+                    ngModel
+                    pInputText 
+                    placeholder="Category name"
+                    pattern="[a-zA-Z0-9].{3,}"
+                    required
+                    >
+                    <small 
+                        *ngIf="assetForm.controls['category_name']?.touched && assetForm.controls['category_name']?.invalid"
+                        class="p-error">
+                        *Category name is required
+                    </small>
+            </div>
+            <div>
+                <input 
+                    name="brand_name"
+                    ngModel
+                    pInputText 
+                    placeholder="Brand name"
+                    pattern="[a-zA-Z0-9].{3,}"
+                    required
+                    >
+                    <small 
+                        *ngIf="assetForm.controls['brand_name']?.touched && assetForm.controls['brand_name']?.invalid"
+                        class="p-error">
+                        *Brand name is required
+                    </small>
+            </div>
+            <div>
+                <input 
+                    name="vendor_email"
+                    ngModel
+                    pInputText 
+                    placeholder="Vendor email"
+                    pattern="[a-zA-Z0-9].{3,}"
+                    email
+                    required
+                    >
+                    <small 
+                        *ngIf="assetForm.controls['vendor_email']?.touched && assetForm.controls['vendor_email']?.invalid"
+                        class="p-error">
+                        *Vendor email is required
+                    </small>
+            </div>
+            <div>
+                <p-dropdown 
+                    [options]="assetType" 
+                    [(ngModel)]="selectedAssetType" 
+                    [showClear]="true" 
+                    placeholder="Select asset type" 
+                    name="dropdownMenu"
+                    required></p-dropdown>
+                <small 
+                    *ngIf="assetForm.controls['dropdownMenu']?.touched && assetForm.controls['dropdownMenu']?.invalid"
+                    class="p-error">
+                    *Asset type is required
+                </small>
+            </div>
+            <div>
+                <p-button 
+                    label="Submit" 
+                    type="submit"
+                    [disabled]="assetForm.invalid"></p-button>
+            </div>
+        </form>
+    </div>
+</p-dialog>

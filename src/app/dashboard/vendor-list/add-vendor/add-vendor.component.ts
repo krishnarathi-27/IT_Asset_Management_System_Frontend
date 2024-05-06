@@ -1,31 +1,35 @@
-import { Component, ViewChild, inject } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, Output, ViewChild, inject } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { VendorService } from '../vendor.service';
 import { MyMessageService } from '../../../shared/my-message.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-add-vendor',
   templateUrl: './add-vendor.component.html',
   styleUrl: './add-vendor.component.css'
 })
-export class AddVendorComponent {
-  visible = true;
+export class AddVendorComponent implements OnDestroy{
+
   roles: string[];
   selectedRole: string;
-
-  @ViewChild('vendorForm') vendorForm : NgForm
-
   router = inject(Router);
   vendorService = inject(VendorService);
   myMessageService = inject(MyMessageService);
+  vendorSubscription: Subscription;
 
-  close(){
+  @Input('visible') visible: boolean;
+  @Output() onSuccessApplied = new EventEmitter<void>();
+  @ViewChild('vendorForm') vendorForm : NgForm
+
+
+  close(): void{
     this.visible = false;
-    this.router.navigate(['vendors'])
+    this.onSuccessApplied.emit();
   }
 
-  onAddVendor(){
+  onAddVendor(): void{
 
     if(!this.vendorForm.valid){
       return;
@@ -34,7 +38,7 @@ export class AddVendorComponent {
     const vendorname = this.vendorForm.value.vendorname;
     const vendoremail = this.vendorForm.value.vendoremail;
 
-    this.vendorService.createVendor(vendorname,vendoremail).subscribe({
+    this.vendorSubscription = this.vendorService.createVendor(vendorname,vendoremail).subscribe({
       next: (result: any) =>{
         this.close();
         this.myMessageService.showMessage('success','Success',result.message);
@@ -45,6 +49,11 @@ export class AddVendorComponent {
     });
 
     this.vendorForm.reset();
+  }
+
+  ngOnDestroy(): void {
+    if(this.vendorSubscription)
+      this.vendorSubscription.unsubscribe();
   }
   
 }

@@ -30,3 +30,7 @@ h2{
 :host::ng-deep .p-menuitem-link :hover{
     color: black;
 }
+
+:host::ng-deep .p-menubar-root-list{
+    background-color: #0077b6; 
+}

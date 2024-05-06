@@ -1,45 +1,50 @@
-<h1>Assets</h1>
-<div class="add-button" *ngIf="canAccess">
-    <p-button label="+ Add Asset" [rounded]="true" severity="danger" (click)="addAsset()"></p-button>
+<app-loader *ngIf="isLoading"></app-loader>
+<div *ngIf="!isLoading">
+    <h1>Assets</h1>
+    <div class="add-button" *ngIf="canAccess">
+        <p-button label="+ Add Asset" [rounded]="true" severity="danger" (click)="addAsset()"></p-button>
+    </div>
+    <app-add-asset (onSuccessApplied)="closeDialog($event)" [visible]="visible"></app-add-asset>
+    <app-update-asset (onSuccessApplied)="closeUpdateDialog($event)" [editMode]="editMode"></app-update-asset>
+
+    <p-table
+        [value]="assets"
+        [paginator]="true"
+        [rows]="5"
+        [showCurrentPageReport]="true"
+        [tableStyle]="{ 'min-width': '50rem' }"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [rowsPerPageOptions]="[5, 10, 20]"
+    >
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width:12.5%">SNo.</th>
+                <th style="width:12.5%">Asset Id</th>
+                <th style="width:12.5%">Asset Status</th>
+                <th style="width:12.5%">Asset Type</th>
+                <th style="width:12.5%">Assigned To</th>
+                <th style="width:12.5%">Category Name</th>
+                <th style="width:12.5%">Vendor Email</th>
+                <th style="width:12.5%" *ngIf="canAccess">Update assets</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-asset let-rowIndex="rowIndex">
+            <tr>
+            <td>{{ rowIndex + 1 }}</td>
+            <td>{{ asset.asset_id }}</td>
+            <td>{{ asset.asset_status }}</td>
+            <td>{{ asset.asset_type}}</td>
+            <td>{{ asset.assigned_to}}</td>
+            <td>{{ asset.category_name}}</td>
+            <td>{{ asset.vendor_email}}</td>
+            <td *ngIf="canAccess">
+                <p-tag 
+                    [ngClass]="asset.asset_status === 'available'? 'active' : 'inactive'"
+                    >
+                    {{ asset.asset_status === 'available'? 'Assign' : 'Unassign'}}
+                </p-tag>
+            </td>
+            </tr>
+        </ng-template>
+    </p-table> 
 </div>
-<router-outlet></router-outlet>
-<p-table
-    [value]="assets"
-    [paginator]="true"
-    [rows]="5"
-    [showCurrentPageReport]="true"
-    [tableStyle]="{ 'min-width': '50rem' }"
-    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-    [rowsPerPageOptions]="[5, 10, 20]"
->
-    <ng-template pTemplate="header">
-        <tr>
-            <th style="width:12.5%">SNo.</th>
-            <th style="width:12.5%">Asset Id</th>
-            <th style="width:12.5%">Asset Status</th>
-            <th style="width:12.5%">Asset Type</th>
-            <th style="width:12.5%">Assigned To</th>
-            <th style="width:12.5%">Category Name</th>
-            <th style="width:12.5%">Vendor Email</th>
-            <th style="width:12.5%" *ngIf="canAccess">Update assets</th>
-        </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-asset let-rowIndex="rowIndex">
-        <tr>
-          <td>{{ rowIndex + 1 }}</td>
-          <td>{{ asset.asset_id }}</td>
-          <td>{{ asset.asset_status }}</td>
-          <td>{{ asset.asset_type}}</td>
-          <td>{{ asset.assigned_to}}</td>
-          <td>{{ asset.category_name}}</td>
-          <td>{{ asset.vendor_email}}</td>
-          <td *ngIf="canAccess">
-            <p-tag 
-                [ngClass]="asset.asset_status === 'available'? 'active' : 'inactive'"
-                (click)="onUpdateAsset(rowIndex)">
-                {{ asset.asset_status === 'available'? 'Assign' : 'Unassign'}}
-            </p-tag>
-        </td>
-        </tr>
-      </ng-template>
-</p-table>

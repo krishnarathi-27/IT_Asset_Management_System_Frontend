@@ -1,6 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UsersService } from './user-list/user.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,7 +8,6 @@ import { UsersService } from './user-list/user.service';
 })
 export class DashboardComponent implements OnInit{
 
-  userSubject = inject(UsersService);
   userRole: string = '';
   cards: object[];
   router = inject(Router);
@@ -44,22 +42,21 @@ export class DashboardComponent implements OnInit{
       image: './././assets/user-image.png',
       accessLevel: ['admin','asset manager']
     },
-    {
-      id: 5,
-      header: 'Issues',
-      subheader: 'View issues in system',
-      image: './././assets/user-image.png',
-      accessLevel: ['asset manager','employee']
-    }
+    // {
+    //   id: 5,
+    //   header: 'Issues',
+    //   subheader: 'View issues in system',
+    //   image: './././assets/user-image.png',
+    //   accessLevel: ['asset manager','employee']
+    // }
   ]
 
-  
-  ngOnInit(){
+  ngOnInit(): void{
     this.userRole = sessionStorage.getItem('role');
     this.cards = this.allCards.filter((item)=>item.accessLevel.includes(this.userRole) === true);
   }
 
-  onVisitClick(cardIndex){
+  onVisitClick(cardIndex): void{
       switch (cardIndex) {
         case 1:
           this.router.navigate(['/users']);
@@ -80,4 +77,5 @@ export class DashboardComponent implements OnInit{
           break;
       }
     }
+
 }

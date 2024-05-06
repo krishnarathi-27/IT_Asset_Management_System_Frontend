@@ -1,7 +1,7 @@
-import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild, inject } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UsersService } from '../user.service';
+import { UserService } from '../user.service';
 import { MyMessageService } from '../../../shared/my-message.service';
 
 @Component({
@@ -10,27 +10,27 @@ import { MyMessageService } from '../../../shared/my-message.service';
   styleUrl: './add-user.component.css'
 })
 export class AddUserComponent implements OnInit{
-  visible = true;
   roles: string[];
   selectedRole: string;
 
+  @Input('visible') visible: boolean;
+  @Output() onSuccessApplied = new EventEmitter<void>();
   @ViewChild('userForm') userForm : NgForm
 
   router = inject(Router);
-  usersService = inject(UsersService);
+  usersService = inject(UserService);
   myMessageService = inject(MyMessageService);
 
   ngOnInit() {
         this.roles = ['Employee','Asset Manager'];
-    }
+  }
 
   close(){
-    this.visible = false;
-    this.router.navigate(['users'])
+      this.visible = false;
+      this.onSuccessApplied.emit();
   }
 
   onAddUser(){
-    console.log(this.userForm)
 
     if(!this.userForm.valid){
       return;

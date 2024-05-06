@@ -20,15 +20,13 @@ export class HeaderComponent implements OnInit{
       next: (result: boolean) =>{
         this.isLoggedIn = result;
         if(this.isLoggedIn){
-
           this.displayNavItems();
         }
       },
       error: (errorObject) =>{
         console.log(errorObject);
       }
-    })
-    
+    })   
 
   }
 
@@ -39,16 +37,24 @@ export class HeaderComponent implements OnInit{
         label:'Dashboard', 
         routerLink: 'dashboard'
       },
+      // {
+      //   label:'Profile',
+      //   routerLink: 'profile'
+      // },
       {
-        label:'Profile',
-        routerLink: 'user/profile'
+        label: 'Logout',
+        command: () =>{
+          this.authService.logout();
+          this.router.navigate(['login']);
+          this.items = [];
+        }
       }
     ]
   }
 
-  logout(){
-    this.authService.logout();
-    this.router.navigate(['login']);
-  }
+  // logout(){
+  //   this.authService.logout();
+  //   this.router.navigate(['login']);
+  // }
 
 }

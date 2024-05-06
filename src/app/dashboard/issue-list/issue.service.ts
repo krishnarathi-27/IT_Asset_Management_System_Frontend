@@ -10,7 +10,7 @@ export class IssueService{
 
     getIssues(){
         return this.http.get(
-            'http://127.0.0.1:5000/v1/vendors'
+            'http://127.0.0.1:5000/v1/issues'
         )
     };
 

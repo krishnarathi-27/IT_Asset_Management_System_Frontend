@@ -1,25 +1,28 @@
-import { Component, ViewChild, inject } from '@angular/core';
+import { Component, OnDestroy, ViewChild, inject } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuthenticationService } from './authentication.service';
 import { Router } from '@angular/router';
-import { UsersService } from '../dashboard/user-list/user.service';
+import { UserService } from '../dashboard/user-list/user.service';
 import { MyMessageService } from '../shared/my-message.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-authentication',
   templateUrl: './authentication.component.html',
   styleUrl: './authentication.component.css'
 })
-export class AuthenticationComponent {
+export class AuthenticationComponent implements OnDestroy{
 
   @ViewChild('authForm') authForm : NgForm
 
   authService = inject(AuthenticationService);
-  userService = inject(UsersService);
+  userService = inject(UserService);
   router = inject(Router);
   myMessageService = inject(MyMessageService);
+  authSubscription : Subscription;
+  profileSubscription : Subscription;
 
-  onLoginSubmit(){
+  onLoginSubmit(): void{
 
     if(!this.authForm.valid){
       return;
@@ -28,7 +31,7 @@ export class AuthenticationComponent {
     const username = this.authForm.value.username;
     const password = this.authForm.value.password;
 
-    this.authService.login(username,password).subscribe({
+    this. authSubscription = this.authService.login(username,password).subscribe({
       next: (result: any) =>{
         sessionStorage.setItem('accessToken',result.data[0].access_token);
         sessionStorage.setItem('refreshToken',result.data[0].refresh_token);
@@ -55,6 +58,11 @@ export class AuthenticationComponent {
         }
       });
     }
+  }
+
+  ngOnDestroy(): void{
+    this.authSubscription?.unsubscribe();
+    this.profileSubscription?.unsubscribe();
   }
 
 }

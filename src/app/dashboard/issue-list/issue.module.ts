@@ -4,6 +4,10 @@ import { TableModule } from "primeng/table";
 import { ButtonModule } from "primeng/button";
 import { IssueListComponent } from "./issue-list.component";
 import { AddIssueComponent } from "./add-issue/add-issue.component";
+import { CommonModule } from "@angular/common";
+import { FormsModule } from "@angular/forms";
+import { DialogModule } from "primeng/dialog";
+import { InputTextModule } from "primeng/inputtext";
 
 const routes: Routes = [
     {path:'',component: IssueListComponent ,children: [
@@ -18,8 +22,12 @@ const routes: Routes = [
         IssueListComponent
     ],
     imports:[
+        CommonModule,
         TableModule,
+        FormsModule,
         ButtonModule,
+        DialogModule,        
+        InputTextModule,
         RouterModule.forChild(routes)
     ]
 })
